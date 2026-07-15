@@ -1,65 +1,101 @@
-import Image from "next/image";
+import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Sparkles, Wand2, Gem } from "lucide-react";
+import { formatPKR } from "@/lib/currency";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const featured = await prisma.product.findMany({
+    where: { isActive: true },
+    orderBy: { createdAt: "desc" },
+  });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div>
+      <section className="pattern-bloom relative overflow-hidden">
+        <div className="absolute inset-0 bg-linear-to-b from-background/30 to-background" />
+        <div className="relative mx-auto flex max-w-4xl flex-col items-center px-4 pb-16 pt-20 text-center">
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            Custom Fine Jewelry
           </p>
+          <h1 className="font-heading text-5xl leading-tight md:text-6xl">
+            Quietly made.
+            <br />
+            <span className="text-gradient-gold">Individually yours.</span>
+          </h1>
+          <p className="mt-6 max-w-xl text-lg text-muted-foreground">
+            Design a bracelet bead by bead — choose every finish, every charm, every detail — or
+            start from a piece we&apos;ve already imagined.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link href="/customize" className={buttonVariants({ size: "lg", className: "gap-2" })}>
+              <Wand2 className="h-4 w-4" />
+              Start Designing
+            </Link>
+            <Link href="/shop" className={buttonVariants({ size: "lg", variant: "outline" })}>
+              Browse Ready-Made
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="border-y border-border bg-secondary/30 py-14">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 sm:grid-cols-3">
+          <div className="text-center">
+            <Gem className="mx-auto h-6 w-6 text-primary" />
+            <p className="mt-3 font-heading text-lg">Bead by Bead</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Every bead is yours to choose — pearlescent, glossy, matte, or gemstone.
+            </p>
+          </div>
+          <div className="text-center">
+            <Sparkles className="mx-auto h-6 w-6 text-primary" />
+            <p className="mt-3 font-heading text-lg">AI Design Assistant</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Describe a mood, and let our assistant sketch the palette for you.
+            </p>
+          </div>
+          <div className="text-center">
+            <Wand2 className="mx-auto h-6 w-6 text-primary" />
+            <p className="mt-3 font-heading text-lg">Made to Gift</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Save sizing profiles for friends, wrap it beautifully, add a note.
+            </p>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {featured.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 py-16">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="font-heading text-3xl">Featured Designs</h2>
+            <Link href="/shop" className="text-sm text-primary underline underline-offset-4">
+              View all
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {featured.map((product) => (
+              <Link key={product.id} href={`/shop/${product.slug}`}>
+                <Card className="h-full overflow-hidden transition-shadow hover:shadow-lg">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={product.heroImageUrl}
+                    alt={product.name}
+                    className="aspect-square w-full bg-secondary/40 object-cover"
+                  />
+                  <CardContent className="py-4">
+                    <p className="font-heading text-lg">{product.name}</p>
+                    <p className="text-sm text-muted-foreground">From {formatPKR(product.basePrice)}</p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
