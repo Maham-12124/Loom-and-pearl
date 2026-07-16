@@ -78,7 +78,7 @@ export function CustomizerProvider({
     };
   });
 
-  const [activeBeadIndex, setActiveBeadIndex] = useState<number | null>(null);
+  const [activeBeadIndex, setActiveBeadIndex] = useState<number | null>(0);
 
   const setWristSize = useCallback((size: WristSize) => {
     setDesign((prev) => ({
@@ -86,7 +86,7 @@ export function CustomizerProvider({
       wristSize: size,
       beads: resizeBeads(prev.beads, WRIST_SIZE_BEAD_COUNT[size]),
     }));
-    setActiveBeadIndex(null);
+    setActiveBeadIndex(0);
   }, []);
 
   const setBeadAt = useCallback(
