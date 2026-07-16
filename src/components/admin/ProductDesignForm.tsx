@@ -6,7 +6,6 @@ import { useCustomizer } from "@/context/CustomizerContext";
 import { CustomizerCanvas } from "@/components/customizer/CustomizerCanvas";
 import { WristSizeSelector } from "@/components/customizer/WristSizeSelector";
 import { BeadEditorPanel } from "@/components/customizer/BeadEditorPanel";
-import { PatternPresetsPanel } from "@/components/customizer/PatternPresetsPanel";
 import { CharmSelector } from "@/components/customizer/CharmSelector";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -133,7 +132,6 @@ export function ProductDesignForm({ initialMeta }: { initialMeta?: ProductMeta }
 
         <WristSizeSelector />
         <BeadEditorPanel />
-        <PatternPresetsPanel />
         <CharmSelector />
 
         <Button
