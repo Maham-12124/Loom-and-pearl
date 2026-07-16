@@ -61,8 +61,9 @@ export function BeadGradientDef({
     case "MATTE":
     default:
       return (
-        <radialGradient id={id} cx="38%" cy="32%" r="75%">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity={0.35} />
+        <radialGradient id={id} cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity={0.3} />
+          <stop offset="18%" stopColor={hexCode} stopOpacity={1} />
           <stop offset="100%" stopColor={hexCode} stopOpacity={1} />
         </radialGradient>
       );
