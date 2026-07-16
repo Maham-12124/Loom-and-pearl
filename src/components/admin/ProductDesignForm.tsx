@@ -3,10 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCustomizer } from "@/context/CustomizerContext";
-import { CustomizerCanvas } from "@/components/customizer/CustomizerCanvas";
 import { WristSizeSelector } from "@/components/customizer/WristSizeSelector";
-import { BeadEditorPanel } from "@/components/customizer/BeadEditorPanel";
-import { CharmSelector } from "@/components/customizer/CharmSelector";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -75,11 +72,7 @@ export function ProductDesignForm({ initialMeta }: { initialMeta?: ProductMeta }
   };
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
-      <div className="rounded-2xl border border-border bg-card/60 p-6">
-        <CustomizerCanvas />
-      </div>
-
+    <div className="mx-auto max-w-xl">
       <div className="space-y-4">
         <Card>
           <CardHeader>
@@ -131,8 +124,6 @@ export function ProductDesignForm({ initialMeta }: { initialMeta?: ProductMeta }
         </Card>
 
         <WristSizeSelector />
-        <BeadEditorPanel />
-        <CharmSelector />
 
         <Button
           size="lg"
