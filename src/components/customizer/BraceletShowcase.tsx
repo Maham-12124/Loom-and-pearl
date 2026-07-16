@@ -127,12 +127,12 @@ export function BraceletShowcase({ beads, charmImageUrl, className }: BraceletSh
             <circle r={26} fill="url(#showcase-charm-shine)" stroke="#e8cdd2" strokeWidth={1} />
             <image
               href={charmImageUrl}
-              x={-19}
-              y={-19}
-              width={38}
-              height={38}
+              x={-27}
+              y={-27}
+              width={54}
+              height={54}
               preserveAspectRatio="xMidYMid slice"
-              clipPath="circle(19px at 19px 19px)"
+              clipPath="circle(19px at 27px 27px)"
             />
           </g>
         )}

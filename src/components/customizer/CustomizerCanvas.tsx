@@ -188,12 +188,12 @@ export function CustomizerCanvas({ className }: { className?: string }) {
               <circle r={20} fill="url(#charm-shine)" stroke="#b08d57" strokeWidth={1} />
               <image
                 href={charm.imageUrl}
-                x={-14}
-                y={-14}
-                width={28}
-                height={28}
+                x={-20}
+                y={-20}
+                width={40}
+                height={40}
                 preserveAspectRatio="xMidYMid slice"
-                clipPath="circle(14px at 14px 14px)"
+                clipPath="circle(14px at 20px 20px)"
               />
             </g>
           )}
