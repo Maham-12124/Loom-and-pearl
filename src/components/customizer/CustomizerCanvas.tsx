@@ -158,8 +158,16 @@ export function CustomizerCanvas({ className }: { className?: string }) {
                   cy={y}
                   r={r}
                   fill={`url(#${gradientIdFor(slot.finish, i)})`}
-                  stroke={isActive ? "var(--color-primary, #b08d57)" : "rgba(0,0,0,0.12)"}
+                  fillOpacity={slot.beadId ? 1 : 0.5}
+                  stroke={
+                    isActive
+                      ? "var(--color-primary, #b08d57)"
+                      : slot.beadId
+                        ? "rgba(0,0,0,0.12)"
+                        : "rgba(0,0,0,0.3)"
+                  }
                   strokeWidth={isActive ? 1.5 : 0.75}
+                  strokeDasharray={slot.beadId ? undefined : "2 2"}
                   className="cursor-pointer transition-transform duration-150 hover:scale-110"
                   style={{ transformOrigin: `${x}px ${y}px` }}
                   onClick={() => setActiveBeadIndex(i)}
