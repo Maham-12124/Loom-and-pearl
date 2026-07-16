@@ -31,9 +31,9 @@ export function ImageUrlField({
       const formData = new FormData();
       formData.append("file", file);
       const res = await fetch(uploadEndpoint, { method: "POST", body: formData });
-      const data = await res.json();
-      if (!res.ok) {
-        toast.error(data.error ?? "Could not upload this image.");
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.url) {
+        toast.error(data?.error ?? "Could not upload this image. Please try again.");
         return;
       }
       onChange(data.url);
@@ -63,18 +63,25 @@ export function ImageUrlField({
           dragOver ? "border-primary bg-primary/5" : "border-border hover:bg-secondary/40"
         )}
       >
-        {value && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={value} alt="" className="h-10 w-10 shrink-0 rounded-md object-cover" />
+        {value ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={value} alt="" className="h-10 w-10 shrink-0 rounded-md object-cover" />
+            <div className="flex flex-1 items-center gap-2">
+              {uploading && <Loader2 className="h-4 w-4 animate-spin" />}
+              <span>{uploading ? "Uploading…" : "Click to change image"}</span>
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-1 items-center gap-2">
+            {uploading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <ImagePlus className="h-4 w-4" />
+            )}
+            <span>{uploading ? "Uploading…" : "Drag & drop an image, or click to browse"}</span>
+          </div>
         )}
-        <div className="flex flex-1 items-center gap-2">
-          {uploading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <ImagePlus className="h-4 w-4" />
-          )}
-          <span>{uploading ? "Uploading…" : "Drag & drop an image, or click to browse"}</span>
-        </div>
       </div>
 
       <input

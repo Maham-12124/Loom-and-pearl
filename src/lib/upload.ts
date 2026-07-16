@@ -52,6 +52,13 @@ export async function saveUploadedImage(file: File): Promise<SaveUploadResult> {
     return { url: blob.url };
   }
 
+  if (process.env.VERCEL) {
+    return {
+      error:
+        "Image storage isn't set up on this deployment yet. Connect a Blob store in the Vercel dashboard (Storage tab) and redeploy, then try again.",
+    };
+  }
+
   const uploadsDir = path.join(process.cwd(), "public", "uploads");
   await mkdir(uploadsDir, { recursive: true });
 
