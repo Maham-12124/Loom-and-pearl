@@ -26,7 +26,7 @@ export function NavBar() {
         <Link href="/" className="flex items-center gap-2 font-heading text-2xl tracking-wide text-gradient-gold">
           <Logo className="h-8 w-8 shrink-0" />
           <span className="hidden sm:inline">Loom &amp; Pearl</span>
-          <span className="sm:hidden">LM</span>
+          <span className="sm:hidden">LP</span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm md:flex">
           <Link href="/shop" className="text-foreground/80 hover:text-foreground">
