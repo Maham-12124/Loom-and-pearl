@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 const NAV = [
   { href: "/admin", label: "Overview" },
+  { href: "/admin/analytics", label: "Analytics" },
   { href: "/admin/beads", label: "Bead Inventory" },
   { href: "/admin/finish-types", label: "Finish Types" },
   { href: "/admin/charms", label: "Charms" },
