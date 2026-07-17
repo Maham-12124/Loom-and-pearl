@@ -3,17 +3,17 @@ import { ImageResponse } from "next/og";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-// 8 petal centers around (16,16) at radius 7, precomputed (Satori doesn't
+// 8 petal centers around (16,16) at radius 8.5, precomputed (Satori doesn't
 // reliably support CSS rotate on nested divs, so we place shapes directly).
 const PETAL_POSITIONS = [
-  { x: 16, y: 9 },
-  { x: 20.9, y: 11.1 },
-  { x: 23, y: 16 },
-  { x: 20.9, y: 20.9 },
-  { x: 16, y: 23 },
-  { x: 11.1, y: 20.9 },
-  { x: 9, y: 16 },
-  { x: 11.1, y: 11.1 },
+  { x: 16, y: 7.5 },
+  { x: 21.95, y: 10.05 },
+  { x: 24.5, y: 16 },
+  { x: 21.95, y: 21.95 },
+  { x: 16, y: 24.5 },
+  { x: 10.05, y: 21.95 },
+  { x: 7.5, y: 16 },
+  { x: 10.05, y: 10.05 },
 ];
 
 export default function Icon() {
@@ -32,10 +32,10 @@ export default function Icon() {
             key={i}
             style={{
               position: "absolute",
-              left: p.x - 4,
-              top: p.y - 4,
-              width: 8,
-              height: 8,
+              left: p.x - 5,
+              top: p.y - 5,
+              width: 10,
+              height: 10,
               borderRadius: "50%",
               background: "#7FA06A",
             }}
@@ -44,10 +44,10 @@ export default function Icon() {
         <div
           style={{
             position: "absolute",
-            left: 16 - 5.5,
-            top: 16 - 5.5,
-            width: 11,
-            height: 11,
+            left: 16 - 6.5,
+            top: 16 - 6.5,
+            width: 13,
+            height: 13,
             borderRadius: "50%",
             background: "#A98FD1",
           }}

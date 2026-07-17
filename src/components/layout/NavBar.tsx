@@ -24,7 +24,7 @@ export function NavBar() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <Link href="/" className="flex items-center gap-2 font-heading text-2xl tracking-wide text-gradient-gold">
-          <Logo className="h-8 w-8 shrink-0" />
+          <Logo className="h-11 w-11 shrink-0" />
           <span className="hidden sm:inline">Loom &amp; Pearl</span>
           <span className="sm:hidden">LP</span>
         </Link>
