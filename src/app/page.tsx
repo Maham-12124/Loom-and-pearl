@@ -78,14 +78,16 @@ export default async function HomePage() {
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {featured.map((product) => (
-              <Link key={product.id} href={`/shop/${product.slug}`}>
-                <Card className="h-full overflow-hidden transition-shadow hover:shadow-lg">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={product.heroImageUrl}
-                    alt={product.name}
-                    className="aspect-square w-full bg-secondary/40 object-cover"
-                  />
+              <Link key={product.id} href={`/shop/${product.slug}`} className="group">
+                <Card className="h-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl">
+                  <div className="overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={product.heroImageUrl}
+                      alt={product.name}
+                      className="aspect-square w-full bg-secondary/40 object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                  </div>
                   <CardContent className="py-4">
                     <p className="font-heading text-lg">{product.name}</p>
                     <p className="text-sm text-muted-foreground">From {formatPKR(product.basePrice)}</p>

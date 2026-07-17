@@ -37,7 +37,7 @@ export default function Icon() {
               width: 8,
               height: 8,
               borderRadius: "50%",
-              background: "#9CAF88",
+              background: "#7FA06A",
             }}
           />
         ))}
@@ -49,7 +49,7 @@ export default function Icon() {
             width: 11,
             height: 11,
             borderRadius: "50%",
-            background: "#C9B8E8",
+            background: "#A98FD1",
           }}
         />
       </div>
