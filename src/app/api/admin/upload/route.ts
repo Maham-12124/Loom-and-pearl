@@ -11,7 +11,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No file provided." }, { status: 400 });
   }
 
-  const result = await saveUploadedImage(file);
+  const trim = formData?.get("trim") === "true";
+  const result = await saveUploadedImage(file, { trim });
   if ("error" in result) return NextResponse.json({ error: result.error }, { status: 400 });
   return NextResponse.json(result, { status: 201 });
 }

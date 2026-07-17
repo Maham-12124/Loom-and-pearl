@@ -15,11 +15,15 @@ export function ImageUrlField({
   value,
   onChange,
   uploadEndpoint = "/api/admin/upload",
+  trimBackground = false,
 }: {
   label: string;
   value: string;
   onChange: (url: string) => void;
   uploadEndpoint?: string;
+  /** Auto-crops uniform-color padding around the subject before saving —
+   * use for small icon-on-plain-background photos like charms. */
+  trimBackground?: boolean;
 }) {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
@@ -30,6 +34,7 @@ export function ImageUrlField({
     try {
       const formData = new FormData();
       formData.append("file", file);
+      if (trimBackground) formData.append("trim", "true");
       const res = await fetch(uploadEndpoint, { method: "POST", body: formData });
       const data = await res.json().catch(() => null);
       if (!res.ok || !data?.url) {

@@ -7,18 +7,15 @@ import { PriceDisplay } from "./PriceDisplay";
 import { PriceBreakdownLines } from "./PriceBreakdownLines";
 import { BraceletShowcase } from "./BraceletShowcase";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useCustomizer } from "@/context/CustomizerContext";
 import { useCartStore } from "@/store/cart-store";
-import { SlidersHorizontal } from "lucide-react";
 import { toast } from "sonner";
 import { formatPKR } from "@/lib/currency";
 
 export function CustomizerLayout({ productName = "Custom Bracelet" }: { productName?: string }) {
   const { design, price, charmOptions } = useCustomizer();
   const addItem = useCartStore((s) => s.addItem);
-  const [sheetOpen, setSheetOpen] = useState(false);
   const [reviewOpen, setReviewOpen] = useState(false);
 
   const charmImageUrl = design.charmId
@@ -34,7 +31,6 @@ export function CustomizerLayout({ productName = "Custom Bracelet" }: { productN
       unitPrice: price.total,
     });
     toast.success("Added to bag", { description: `${productName} — ${formatPKR(price.total)}` });
-    setSheetOpen(false);
     setReviewOpen(false);
   };
 
@@ -48,41 +44,26 @@ export function CustomizerLayout({ productName = "Custom Bracelet" }: { productN
           </div>
         </div>
 
-        {/* Desktop controls column */}
-        <div className="hidden lg:block">
+        {/* Controls column — always visible, stacked below the canvas on mobile */}
+        <div>
           <CustomizerControls />
           <div className="mt-4 space-y-3">
             <PriceDisplay />
-            <Button size="lg" className="w-full" onClick={() => setReviewOpen(true)}>
+            <Button size="lg" className="hidden w-full lg:flex" onClick={() => setReviewOpen(true)}>
               Add to Bag
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Mobile sticky bottom sheet trigger */}
+      {/* Mobile sticky bottom bar */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 p-3 backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-6xl items-center gap-3">
           <div className="flex-1">
             <p className="text-xs text-muted-foreground">Total</p>
             <p className="font-heading text-xl text-gradient-gold">{formatPKR(price.total)}</p>
           </div>
-          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger render={<Button variant="outline" className="gap-2" />}>
-              <SlidersHorizontal className="h-4 w-4" />
-              Customize
-            </SheetTrigger>
-            <SheetContent side="bottom" className="max-h-[85vh] overflow-y-auto rounded-t-2xl">
-              <SheetHeader>
-                <SheetTitle className="font-heading">Design Your Bracelet</SheetTitle>
-              </SheetHeader>
-              <div className="space-y-4 px-4 pb-6">
-                <CustomizerControls />
-                <PriceDisplay />
-              </div>
-            </SheetContent>
-          </Sheet>
-          <Button size="lg" onClick={() => setReviewOpen(true)}>
+          <Button size="lg" className="flex-1" onClick={() => setReviewOpen(true)}>
             Add to Bag
           </Button>
         </div>

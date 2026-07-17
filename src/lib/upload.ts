@@ -2,6 +2,7 @@ import { createHash } from "crypto";
 import { mkdir, writeFile, access } from "fs/promises";
 import path from "path";
 import { put, head } from "@vercel/blob";
+import sharp from "sharp";
 
 const ALLOWED_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -25,8 +26,15 @@ export type SaveUploadResult = { url: string } | { error: string };
  * When BLOB_READ_WRITE_TOKEN is set (production, once a Vercel Blob store
  * is connected), files persist to Vercel Blob — Vercel's serverless
  * filesystem is ephemeral, so writing to public/uploads there is silently
- * lost. Local dev without that token keeps writing to public/uploads/. */
-export async function saveUploadedImage(file: File): Promise<SaveUploadResult> {
+ * lost. Local dev without that token keeps writing to public/uploads/.
+ *
+ * `trim: true` (used for charm photos) auto-crops uniform-color padding
+ * around the subject before saving, so a small icon centered on a plain
+ * background fills its circular frame instead of floating in dead space. */
+export async function saveUploadedImage(
+  file: File,
+  options?: { trim?: boolean }
+): Promise<SaveUploadResult> {
   const ext = ALLOWED_TYPES[file.type];
   if (!ext) {
     return { error: "Unsupported file type. Use JPEG, PNG, WEBP, or GIF." };
@@ -35,7 +43,14 @@ export async function saveUploadedImage(file: File): Promise<SaveUploadResult> {
     return { error: "File too large — max 5MB." };
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
+  let buffer: Buffer<ArrayBufferLike> = Buffer.from(await file.arrayBuffer());
+  if (options?.trim) {
+    buffer = await sharp(buffer)
+      .trim()
+      .toBuffer()
+      .catch(() => buffer);
+  }
+
   const hash = createHash("sha256").update(buffer).digest("hex");
   const filename = `${hash}.${ext}`;
 

@@ -97,6 +97,7 @@ export function CharmManager({ initialCharms }: { initialCharms: CharmOption[] }
                 label="Image"
                 value={form.imageUrl}
                 onChange={(url) => setForm({ ...form, imageUrl: url })}
+                trimBackground
               />
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
