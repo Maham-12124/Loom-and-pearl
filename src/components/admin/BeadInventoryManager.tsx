@@ -130,7 +130,7 @@ export function BeadInventoryManager({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-heading text-3xl">Bead Inventory</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button className="gap-2" onClick={openCreate} />}>
@@ -145,7 +145,7 @@ export function BeadInventoryManager({
                 <Label>Name</Label>
                 <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
                   <Label>Hex Code</Label>
                   <div className="flex items-center gap-2">
@@ -175,7 +175,7 @@ export function BeadInventoryManager({
                 value={form.textureUrl}
                 onChange={(url) => setForm({ ...form, textureUrl: url })}
               />
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div className="space-y-1.5">
                   <Label>Size</Label>
                   <Select value={form.size} onValueChange={(v) => setForm({ ...form, size: v as BeadMM })}>

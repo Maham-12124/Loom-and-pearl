@@ -76,7 +76,7 @@ export function CharmManager({ initialCharms }: { initialCharms: CharmOption[] }
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-heading text-3xl">Charms</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger
@@ -99,7 +99,7 @@ export function CharmManager({ initialCharms }: { initialCharms: CharmOption[] }
                 onChange={(url) => setForm({ ...form, imageUrl: url })}
                 trimBackground
               />
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
                   <Label>Price (Rs.)</Label>
                   <Input

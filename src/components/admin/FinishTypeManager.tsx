@@ -61,7 +61,7 @@ export function FinishTypeManager({ initialTypes }: { initialTypes: FinishTypeIt
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-heading text-3xl">Finish Types</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button className="gap-2" onClick={() => setForm(emptyForm)} />}>

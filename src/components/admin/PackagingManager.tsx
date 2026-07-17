@@ -99,7 +99,7 @@ export function PackagingManager({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-heading text-3xl">Gift Packaging</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button className="gap-2" onClick={openCreate} />}>
@@ -114,7 +114,7 @@ export function PackagingManager({
                 <Label>Name</Label>
                 <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <TypeSelectWithAdd
                   label="Type"
                   value={form.type}

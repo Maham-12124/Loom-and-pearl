@@ -30,6 +30,15 @@ export function BeadEditorPanel() {
     return acc;
   }, {});
 
+  /** How many other slots in this design already use each bead — used to stop
+   * a bead being picked for more slots than its physical stock can cover. */
+  const usedElsewhereById = design.beads.reduce<Record<string, number>>((acc, slot, i) => {
+    if (i !== activeBeadIndex && slot.beadId) {
+      acc[slot.beadId] = (acc[slot.beadId] ?? 0) + 1;
+    }
+    return acc;
+  }, {});
+
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between space-y-0">
@@ -54,16 +63,25 @@ export function BeadEditorPanel() {
             <div className="flex flex-wrap gap-2">
               {beads.map((bead) => {
                 const isSelected = activeSlot?.beadId === bead.id;
+                const soldOut = !isSelected && (usedElsewhereById[bead.id] ?? 0) >= bead.stock;
                 return (
                   <button
                     key={bead.id}
                     type="button"
-                    title={`${bead.name} — ${formatPKR(bead.price)}`}
+                    disabled={soldOut}
+                    title={
+                      soldOut
+                        ? `${bead.name} — no more in stock for this bracelet`
+                        : `${bead.name} — ${formatPKR(bead.price)}`
+                    }
                     onClick={() =>
                       setBeadAt(activeBeadIndex, bead.id, bead.hexCode ?? "#cccccc", bead.finish)
                     }
                     className={cn(
-                      "relative flex h-9 w-9 items-center justify-center rounded-full border-2 shadow-sm transition-transform hover:scale-110",
+                      "relative flex h-9 w-9 items-center justify-center rounded-full border-2 shadow-sm transition-transform",
+                      soldOut
+                        ? "cursor-not-allowed border-border opacity-40"
+                        : "hover:scale-110",
                       isSelected ? "border-primary ring-2 ring-primary/40" : "border-border"
                     )}
                     style={{
@@ -76,6 +94,11 @@ export function BeadEditorPanel() {
                         color="#ffffff"
                         strokeWidth={3}
                       />
+                    )}
+                    {soldOut && (
+                      <span className="absolute inset-0 flex items-center justify-center">
+                        <span className="h-0.5 w-6 rotate-45 rounded-full bg-destructive" />
+                      </span>
                     )}
                   </button>
                 );
