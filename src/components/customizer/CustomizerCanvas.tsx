@@ -122,7 +122,7 @@ export function CustomizerCanvas({ className }: { className?: string }) {
             cy={CENTER}
             r={LOOP_RADIUS}
             fill="none"
-            stroke="var(--color-gold-soft, #aecb98)"
+            stroke="var(--color-gold-soft, #e3bcc7)"
             strokeOpacity={0.5}
             strokeWidth={2}
           />
